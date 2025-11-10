@@ -1,0 +1,212 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+struct Node{
+    string page;
+    Node *next;
+};
+Node *top = NULL;
+string currentPage = "";        //NULL(not even space)
+
+void push(string page)
+{
+    Node *nn = new Node();
+    nn->page=page;
+    nn->next=top;
+    top=nn;
+}
+string pop(){
+    if(top==NULL)
+        return "";
+        
+    string page = top->page;
+    Node *temp=top;
+    top=top->next;
+    delete temp;
+    return page;
+}
+bool empty()
+{
+    return top==NULL;
+}
+void addVisitedPage()
+{
+    //jr curPage variable empty nasel mg last visited page push
+    if(!currentPage.empty())
+        push(currentPage);
+        
+    cout<<"\nEnter URL / Page : ";
+    cin.ignore();
+    getline(cin,currentPage);
+    cout<<"\nVisited Page : "<<currentPage<<endl;
+}
+void navigateBack()
+{
+    if(empty())
+    {
+        cout<<"\nNo more Pages Available ";
+        return;
+    }
+    currentPage = pop();
+    cout<<"\nNavigated Back to : "<<currentPage<<endl;
+}
+void viewCurrentPage()
+{
+    if(empty())
+    {
+        cout<<"\nNo Page Opened Currently ";
+    }
+    else{
+        cout<<"\nCurrent Page : "<<currentPage;
+    }
+}
+void checkHistoryEmpty()
+{
+    if(empty())
+    {
+        cout<<"\nHistory Is EMPTYYY";
+    }
+    else{
+        cout<<"\nHistory Not Empty";
+    }
+}
+int main() {
+    // Write C++ code here
+    int choice;
+    do
+    {
+        cout << "\n=== Browser History Management (Stack using Linked List) ===\n";
+        cout << "1. Add Visited Page\n";
+        cout << "2. Navigate Back\n";
+        cout << "3. View Current Page\n";
+        cout << "4. Check if History is Empty\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            addVisitedPage();
+            break;
+        case 2:
+            navigateBack();
+            break;
+        case 3:
+            viewCurrentPage();
+            break;
+        case 4:
+            checkHistoryEmpty();
+            break;
+        case 5:
+            cout << "Exiting..." << endl;
+            break;
+        default:
+            cout << "Invalid choice! Try again." << endl;
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+
+#OUTPUT:
+
+=== Browser History Management (Stack using Linked List) ===
+1. Add Visited Page
+2. Navigate Back
+3. View Current Page
+4. Check if History is Empty
+5. Exit
+Enter your choice: 1
+
+Enter URL / Page : Google.com
+
+Visited Page : Google.com
+
+=== Browser History Management (Stack using Linked List) ===
+1. Add Visited Page
+2. Navigate Back
+3. View Current Page
+4. Check if History is Empty
+5. Exit
+Enter your choice: 1
+
+Enter URL / Page : YouTube.com
+
+Visited Page : YouTube.com
+
+=== Browser History Management (Stack using Linked List) ===
+1. Add Visited Page
+2. Navigate Back
+3. View Current Page
+4. Check if History is Empty
+5. Exit
+Enter your choice: 1
+
+Enter URL / Page : ChatGPT.com
+
+Visited Page : ChatGPT.com
+
+=== Browser History Management (Stack using Linked List) ===
+1. Add Visited Page
+2. Navigate Back
+3. View Current Page
+4. Check if History is Empty
+5. Exit
+Enter your choice: 2
+
+Navigated Back to : YouTube.com
+
+=== Browser History Management (Stack using Linked List) ===
+1. Add Visited Page
+2. Navigate Back
+3. View Current Page
+4. Check if History is Empty
+5. Exit
+Enter your choice: 3
+
+Current Page : YouTube.com
+=== Browser History Management (Stack using Linked List) ===
+1. Add Visited Page
+2. Navigate Back
+3. View Current Page
+4. Check if History is Empty
+5. Exit
+Enter your choice: 4
+
+History Not Empty
+=== Browser History Management (Stack using Linked List) ===
+1. Add Visited Page
+2. Navigate Back
+3. View Current Page
+4. Check if History is Empty
+5. Exit
+Enter your choice: 2
+
+Navigated Back to : Google.com
+
+=== Browser History Management (Stack using Linked List) ===
+1. Add Visited Page
+2. Navigate Back
+3. View Current Page
+4. Check if History is Empty
+5. Exit
+Enter your choice: 2
+
+No Pages Available in History : 
+=== Browser History Management (Stack using Linked List) ===
+1. Add Visited Page
+2. Navigate Back
+3. View Current Page
+4. Check if History is Empty
+5. Exit
+Enter your choice: 4
+
+History Is EMPTYYY
+=== Browser History Management (Stack using Linked List) ===
+1. Add Visited Page
+2. Navigate Back
+3. View Current Page
+4. Check if History is Empty
+5. Exit
+Enter your choice: 

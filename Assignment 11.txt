@@ -1,0 +1,143 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#define SIZE 10
+using namespace std;
+struct Node
+{
+    int id;
+    string name;
+    Node *next;
+};
+Node *temp;
+Node *hashTable[SIZE];
+void initialize()
+{
+    for(int i=0;i<SIZE;i++)
+    {
+        hashTable[i]=NULL;
+    }
+}
+int hashFunc(int key)
+{
+    return key%SIZE;
+}
+void insert(int id,string name)
+{
+    int index=hashFunc(id);
+    Node *nn=new Node();
+    nn->id=id;
+    nn->name=name;
+    nn->next=NULL;
+    if(hashTable[index]==NULL)
+    {
+        hashTable[index]=nn;
+    }
+    else
+    {
+        temp=hashTable[index];
+        while(temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=nn;
+    }
+}
+void search(int key)
+{
+    int index=hashFunc(key);
+    temp=hashTable[index];
+    while(temp!=NULL)
+    {
+        if(temp->id==key)
+        {
+            cout<<"\nEmployee Found : "<<temp->name<<endl;
+            return;
+        }
+        temp=temp->next;
+    }
+    cout<<"\nEmployee Not Found";
+}
+void display()
+{
+    cout<<"\nDATABASE : \n";
+    for(int i=0;i<SIZE;i++)
+    {
+        cout<<i<<" -> ";
+        temp=hashTable[i];
+        if(hashTable[i]==NULL)
+        {
+            cout<<"Empty";
+        }
+        else
+        {
+            while(temp!=NULL)
+            {
+                cout<<"["<<temp->id<<" "<<temp->name<<"]";
+                if(temp->next!=NULL)
+                {
+                    cout<<"->";
+                }
+                temp=temp->next;
+            }
+        }
+        cout<<endl;
+    }
+}
+int main() {
+    initialize();
+    int id,n,key;
+    string name;
+    cout<<"\nEnter No. of Employees : ";
+    cin>>n;
+    for(int i=0;i<n;i++)
+    {
+        cout<<"\nEnter Employee ID : ";
+        cin>>id;
+        cout<<"Enter Employee Name : ";
+        cin>>name;
+        insert(id,name);
+    }
+    display();
+    cout<<"\nEnter Employee ID to Search : ";
+    cin>>key;
+    search(key);
+    return 0;
+}
+
+#OUTPUT :
+
+Enter No. of Employees : 5
+
+Enter Employee ID : 101
+Enter Employee Name : Soumya
+
+Enter Employee ID : 106
+Enter Employee Name : Aryan
+
+Enter Employee ID : 111
+Enter Employee Name : Darshan
+
+Enter Employee ID : 603
+Enter Employee Name : Shravani
+
+Enter Employee ID : 112
+Enter Employee Name : vedanti
+
+DATABASE : 
+0 -> Empty
+1 -> [101 Soumya]->[111 Darshan]
+2 -> [112 vedanti]
+3 -> [603 Shravani]
+4 -> Empty
+5 -> Empty
+6 -> [106 Aryan]
+7 -> Empty
+8 -> Empty
+9 -> Empty
+
+Enter Employee ID to Search : 111
+
+Employee Found : Darshan
+
+
+=== Code Execution Successful ===

@@ -1,0 +1,197 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+struct Node
+{
+    string route;
+    Node *next;
+};
+Node *temp, *head=NULL;
+void addRoute()
+{
+    string cityName;
+    cout<<"Enter City Name : ";
+    cin>>cityName;
+    
+    Node *nn=new Node();
+    nn->route=cityName;
+    nn->next=NULL;
+    if(head==NULL)  //Empty
+    {
+        head=nn;
+        head->next=head;
+    }
+    else        //append
+    {
+        temp=head;
+        while(temp->next!=head)
+        {
+            temp=temp->next;
+        }
+        temp->next=nn;
+        nn->next=head;
+    }
+    cout<<"Route Added\n";
+}
+void removeRoute()
+{
+    if(head==NULL)
+    {
+        cout<<"\nNo Routes Available. Please Add Routes!!\n";
+        return;
+    }
+    string city;
+    cout<<"Enter City to Remove : ";
+    cin>>city;
+    
+    temp=head;
+    Node *prev = NULL;
+    //Case 1:1 ach node ahe
+    if(head->next==head && head->route==city)
+    {
+        delete head;
+        head=NULL;
+        cout<<"\nRoute Deleted Succedfully\n";
+        return;
+    }
+  
+    //case 2: jr head is the route to be deleted
+    if(head->route==city)
+    {
+        while(temp->next!=head)
+        {
+            temp=temp->next;   
+        }
+        temp->next=head->next;
+        Node *delNode=head;
+        head=head->next;
+        delete delNode;
+        cout<<"\nRoute Deleted Succedfully\n";
+        return;
+    }
+    //case 3 : Somehwre in between
+   do
+   {
+       prev=temp;
+       temp=temp->next;
+       if(temp->route==city)
+       {
+           prev->next=temp->next;
+           delete temp;
+           cout<<"\nRoute Deleted Successfully\n";
+           return;
+       }
+   }while(temp!=head);
+   cout<<"\nRoute Not Found\n";
+}
+void display()
+{
+    if(head==NULL)
+    {
+        cout<<"\nNo Routes Found";
+        return;
+    }
+    temp=head;
+    cout<<"NAVIGATION ROUTES : ";
+    do{
+        cout<<temp->route<<"->";
+        temp=temp->next;
+    }while(temp!=head);
+    cout<<"(back to "<<head->route<<")"<<endl;
+}
+int main() {
+    int ch;
+    do{
+        cout<<"\n------MENU------";
+        cout<<"\n1.Add Route";
+        cout<<"\n2.Remove Route";
+        cout<<"\n3.Display Route";
+        cout<<"\n4.Exit";
+        cout<<"\nEnter Choice : ";
+        cin>>ch;
+       switch(ch)
+        {
+            case 1:
+            addRoute();
+            break;
+            case 2:
+            removeRoute();
+            break;
+            case 3:
+            display();
+            break;
+            case 4:
+            cout<<"\nEXITINGGG";
+            exit(0);
+            break;
+            default: cout<<"\nInvalid Choice";
+        }
+    }while(ch!=4);
+
+    return 0;
+}
+
+#OUTPUT:
+
+------MENU------
+1.Add Route
+2.Remove Route
+3.Display Route
+4.Exit
+Enter Choice : 1
+Enter City Name : Pune
+Route Added
+
+------MENU------
+1.Add Route
+2.Remove Route
+3.Display Route
+4.Exit
+Enter Choice : 1
+Enter City Name : Bombay
+Route Added
+
+------MENU------
+1.Add Route
+2.Remove Route
+3.Display Route
+4.Exit
+Enter Choice : 1
+Enter City Name : Delhi
+Route Added
+
+------MENU------
+1.Add Route
+2.Remove Route
+3.Display Route
+4.Exit
+Enter Choice : 3
+NAVIGATION ROUTES : Pune->Bombay->Delhi->->(back to Pune)
+
+------MENU------
+1.Add Route
+2.Remove Route
+3.Display Route
+4.Exit
+Enter Choice : 2
+Enter City to Remove : Delhi
+
+Route Deleted Succedfully
+
+------MENU------
+1.Add Route
+2.Remove Route
+3.Display Route
+4.Exit
+Enter Choice : 3
+NAVIGATION ROUTES : Pune->Bombay->->(back to Pune)
+
+------MENU------
+1.Add Route
+2.Remove Route
+3.Display Route
+4.Exit
+Enter Choice : 4
+
+
+=== Code Execution Successful ===

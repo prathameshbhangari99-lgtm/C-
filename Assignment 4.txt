@@ -1,0 +1,296 @@
+#include<iostream>
+using namespace std;
+struct Node
+{
+    string data;
+    Node *next;
+    Node *prev;
+};
+Node *temp, *tail=NULL;
+Node *head=NULL;
+void insertText()
+{
+    Node *nn = new Node();
+    nn->next=NULL;
+    string text;
+    cout<<"\nEnter Text : ";
+    cin.ignore();
+    getline(cin,nn->data);
+    if(head==NULL)
+    {
+        nn->prev=NULL;
+        head=tail=nn;
+    }
+    else
+    {
+        tail->next=nn;
+        nn->prev=tail;
+        tail=nn;
+    }
+    cout<<"\nText Inserted Successfully!!\n";
+}
+void delText()
+{
+    string text;
+    cout<<"\nEnter Text to Delete : ";
+    cin.ignore();
+    getline(cin,text);
+    if(head==NULL)
+    {
+        cout<<"\nText Editor has NO Text";
+    }
+    else
+    {
+        temp=head;
+        while(temp!=NULL)
+        {
+            if(temp->data==text)
+            {
+                if(temp->prev==NULL)
+                {
+                    head=temp->next;
+                }
+                else{
+                    temp->prev->next=temp->next;
+                }
+                if(temp->next==NULL)
+                {
+                    tail=temp->prev;
+                }
+                else
+                {
+                    temp->next->prev=temp->prev;
+                }
+                delete temp;
+                cout<<"\nText Deleted Successfully";
+                return;
+            }
+            temp=temp->next;
+        }
+       cout<<"\nText not Found"; 
+    }
+}
+void display()
+{
+    if(head==NULL)
+    {
+        cout<<"\nText Editor is Empty";
+        return;
+    }
+    temp=head;
+    cout<<"\nCurrent Text : ";
+    while(temp!=NULL)
+    {
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+void searchText()
+{
+    int pos=1;
+    string text;
+    cout<<"\nEnter Text to Search : ";
+    cin.ignore();
+    getline(cin,text);
+    temp=head;
+    while(temp!=NULL)
+    {
+        if(temp->data==text)
+        {
+            cout<<"\nText found At Location "<<pos<<endl;
+            return;
+        }
+        pos++;
+        temp=temp->next;
+    }
+    if(temp==NULL)
+    {
+        cout<<"\nText Not Found";
+    }
+}
+void printReverse()
+{
+    if(tail==NULL)
+    {
+        cout<<"\nNO TEXT AVAILABLE\n";
+        return;
+    }
+    temp=tail;
+    while(temp!=NULL)
+    {
+        cout<<temp->data<<" ";
+        temp=temp->prev;
+    }
+    cout<<endl;
+}
+int main()
+{
+    int ch;
+    do{
+        cout<<"\n------MENU------";
+        cout<<"\n1.Insert Text";
+        cout<<"\n2.Delete Text";
+        cout<<"\n3.Display Text";
+        cout<<"\n4.Search Text";
+        cout<<"\n5.Print Reverse Text";
+        cout<<"\n6.Exit";
+        cout<<"\nEnter Choice : ";
+        cin>>ch;
+        switch(ch)
+        {
+            case 1:
+            insertText();
+            break;
+            case 2:
+            delText();
+            break;
+            case 3:
+            display();
+            break;
+            case 4:
+            searchText();
+            break;
+            case 5:
+            printReverse();
+            break;
+            case 6:
+            exit(0);
+            break;
+            default: cout<<"\nInvalid Choice";
+        }
+    }while(ch!=6);
+}
+
+#OUPUT:
+
+------MENU------
+1.Insert Text
+2.Delete Text
+3.Display Text
+4.Search Text
+5.Print Reverse Text
+6.Exit
+Enter Choice : 1
+
+Enter Text : hi
+
+Text Inserted Successfully!!
+
+------MENU------
+1.Insert Text
+2.Delete Text
+3.Display Text
+4.Search Text
+5.Print Reverse Text
+6.Exit
+Enter Choice : 1
+
+Enter Text : pccoe
+
+Text Inserted Successfully!!
+
+------MENU------
+1.Insert Text
+2.Delete Text
+3.Display Text
+4.Search Text
+5.Print Reverse Text
+6.Exit
+Enter Choice : 3
+
+Current Text : hi pccoe 
+
+------MENU------
+1.Insert Text
+2.Delete Text
+3.Display Text
+4.Search Text
+5.Print Reverse Text
+6.Exit
+Enter Choice : 2
+
+Enter Text to Delete : pc
+
+Text not Found
+------MENU------
+1.Insert Text
+2.Delete Text
+3.Display Text
+4.Search Text
+5.Print Reverse Text
+6.Exit
+Enter Choice : 1
+
+Enter Text : soum
+
+Text Inserted Successfully!!
+
+------MENU------
+1.Insert Text
+2.Delete Text
+3.Display Text
+4.Search Text
+5.Print Reverse Text
+6.Exit
+Enter Choice : 2
+
+Enter Text to Delete : pccoe
+
+Text Deleted Successfully
+------MENU------
+1.Insert Text
+2.Delete Text
+3.Display Text
+4.Search Text
+5.Print Reverse Text
+6.Exit
+Enter Choice : 3
+
+Current Text : hi soum 
+
+------MENU------
+1.Insert Text
+2.Delete Text
+3.Display Text
+4.Search Text
+5.Print Reverse Text
+6.Exit
+Enter Choice : 4
+
+Enter Text to Search : soum
+
+Text found At Location 2
+
+------MENU------
+1.Insert Text
+2.Delete Text
+3.Display Text
+4.Search Text
+5.Print Reverse Text
+6.Exit
+Enter Choice : 5
+soum hi 
+
+------MENU------
+1.Insert Text
+2.Delete Text
+3.Display Text
+4.Search Text
+5.Print Reverse Text
+6.Exit
+Enter Choice : 3
+
+Current Text : hi soum 
+
+------MENU------
+1.Insert Text
+2.Delete Text
+3.Display Text
+4.Search Text
+5.Print Reverse Text
+6.Exit
+Enter Choice : 6
+
+
+=== Code Execution Successful ===

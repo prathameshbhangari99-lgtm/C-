@@ -1,0 +1,204 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+struct Employee
+{
+    int emp_ID;
+    string emp_NAME;
+    int emp_SALARY;
+};
+void swap(Employee &e1,Employee &e2)
+{
+    Employee temp;
+    temp=e1;
+    e1=e2;
+    e2=temp;
+}
+int partition(Employee e[],int lb,int ub)
+{
+    int start=lb;
+    int end=ub;
+    int pivot = e[lb].emp_ID;
+    while(start<end)
+    {
+        while(e[start].emp_ID <= pivot && start<ub)
+        {
+            start++;
+        }
+        while(e[end].emp_ID > pivot && end>lb)
+        {
+            end--;
+        }
+        if(start<end)
+        {
+            swap(e[start],e[end]);
+        }
+    }
+    swap(e[end],e[lb]);
+    return end;
+    
+}
+void quickSort(Employee e[],int lb,int ub)
+{
+    if(lb<ub)
+    {
+        int loc=partition(e,lb,ub);
+        quickSort(e,lb,loc-1);
+        quickSort(e,loc+1,ub);
+       
+    }
+}
+void merge(Employee e[],int lb,int mid,int ub)
+{
+    int i=lb;
+    int j=mid+1;
+    int k=lb;
+    Employee b[50];
+    while(i<=mid && j<=ub)
+    {
+        if(e[i].emp_NAME < e[j].emp_NAME)
+        {
+            b[k]=e[i];
+            i++;
+        }
+        else
+        {
+            b[k]=e[j];
+            j++;
+        }
+        k++;
+    }
+    if(i>mid)
+    {
+        while(j<=ub)
+        {
+            b[k]=e[j];
+            j++;
+            k++;
+        }
+    }
+    else
+    {
+        while(i<=mid)
+        {
+            b[k]=e[i];
+            i++;
+            k++;
+        }
+    }
+    for(int k=lb;k<=ub;k++)
+    {
+        e[k]=b[k];
+    }
+}
+void mergeSort(Employee e[],int lb,int ub)
+{
+    if(lb<ub)
+    {
+        int mid=(lb+ub)/2;
+        mergeSort(e,lb,mid);
+        mergeSort(e,mid+1,ub);
+        merge(e,lb,mid,ub);
+       
+    }
+}
+void display(Employee e[],int n)
+{
+    for(int i=0;i<n;i++)
+    {
+         cout<<"\n\nID : "<<e[i].emp_ID;
+        cout<<"\nNAME : "<<e[i].emp_NAME;
+        cout<<"\nSALARY : "<<e[i].emp_SALARY;
+    }
+}
+int main() {
+    int n;
+    int ch;
+    cout<<"\nEnter No. of Employees(at least 20) : ";
+    cin>>n;
+    Employee e[n];
+    
+    for(int i=0;i<n;i++)
+    {
+       cout<<"\nEnter Employee ID, Name and Salary : ";
+       cin>>e[i].emp_ID;
+        cin>>e[i].emp_NAME;
+        cin>>e[i].emp_SALARY;
+    }
+    do{
+        cout<<"\n\nMENU : ";
+        cout<<"\n1.Quick Sort EMP ID ";
+        cout<<"\n2.Merge Sort EMP NAME ";
+        cout<<"\n3.Display ";
+        cout<<"\n4.Exit";
+        cout<<"\nEnter Choice : ";
+        cin>>ch;
+        switch(ch)
+        {
+            case 1: quickSort(e,0,n-1);
+             cout<<"\nSorted EMP ID using Quick Sort : ";
+             display(e,n);
+            break;
+            case 2: mergeSort(e,0,n-1);
+             cout<<"\nSorted Name using Merge Sort : ";
+             display(e,n);
+            break;
+            case 3 : display(e,n);
+            break;
+            case 4 : cout<<"\nEXITINGGGG...";
+            exit(0);
+            default: cout<<"\nINVALID CHOICE";
+        }
+    }while(ch!=6);
+    return 0;
+}
+
+#OUTPUT :
+
+Enter No. of Employees(at least 20) : 2
+
+Enter Employee ID, Name and Salary : 4 sew 321
+
+Enter Employee ID, Name and Salary : 1 zrew 543
+
+
+MENU : 
+1.Quick Sort EMP ID 
+2.Merge Sort EMP NAME 
+3.Display 
+4.Exit
+Enter Choice : 1
+
+Sorted EMP ID using Quick Sort : 
+
+ID : 1
+NAME : zrew
+SALARY : 543
+
+ID : 4
+NAME : sew
+SALARY : 321
+
+MENU : 
+1.Quick Sort EMP ID 
+2.Merge Sort EMP NAME 
+3.Display 
+4.Exit
+Enter Choice : 2
+
+Sorted Name using Merge Sort : 
+
+ID : 4
+NAME : sew
+SALARY : 321
+
+ID : 1
+NAME : zrew
+SALARY : 543
+
+MENU : 
+1.Quick Sort EMP ID 
+2.Merge Sort EMP NAME 
+3.Display 
+4.Exit
+Enter Choice : 

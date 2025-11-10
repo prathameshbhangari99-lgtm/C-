@@ -1,0 +1,170 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+struct Node{
+    string name;
+    Node *next;
+};
+Node *front=NULL;
+Node *rear=NULL;
+
+void addParty()
+{
+    string name;
+    cout<<"\nEnter Party Name : ";
+    cin.ignore();
+    getline(cin,name);
+    Node *nn=new Node();
+    nn->name=name;
+    nn->next=NULL;
+    
+    if(front==NULL)
+    {
+        front=rear=nn;
+    }
+    else{
+        rear->next=nn;
+        rear=nn;
+    }
+    cout<<"\nParty Added to the wait list\n";
+}
+void seatParty()
+{
+    if(front==NULL)
+    {
+        cout<<"\nWaitlist is Empty\n";
+        return;
+    }
+    Node *temp=front;
+    cout<<endl<<temp->name<<" is being seated.";
+    front=front->next;
+    delete temp;
+    if(front==NULL)
+        rear==NULL;
+}
+void display()
+{
+    if(front==NULL)
+    {
+        cout<<"\nWaitlist Is Empty\n";
+        return;
+    }
+    Node *temp=front;
+    while(temp!=NULL)
+    {
+        cout<<temp->name<<endl;
+        //if(temp->next!=NULL)
+            //cout<<"->";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+int main() {
+   int choice;
+    do
+    {
+        cout << "\n===== RESTAURANT WAITLIST SYSTEM =====\n";
+        cout << "1. Add Party to Waitlist\n";
+        cout << "2. Seat Party\n";
+        cout << "3. Display Waitlist\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            addParty();
+            break;
+        case 2:
+            seatParty();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            cout << "👋 Exiting... Thank you!\n";
+            break;
+        default:
+            cout << "Inalid choice! Please try again.\n";
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
+
+#OUTPUT:
+
+===== RESTAURANT WAITLIST SYSTEM =====
+1. Add Party to Waitlist
+2. Seat Party
+3. Display Waitlist
+4. Exit
+Enter your choice: 1
+
+Enter Party Name : Soumya
+
+Party Added to the wait list
+
+===== RESTAURANT WAITLIST SYSTEM =====
+1. Add Party to Waitlist
+2. Seat Party
+3. Display Waitlist
+4. Exit
+Enter your choice: 1
+
+Enter Party Name : Darshan Gawade
+
+Party Added to the wait list
+
+===== RESTAURANT WAITLIST SYSTEM =====
+1. Add Party to Waitlist
+2. Seat Party
+3. Display Waitlist
+4. Exit
+Enter your choice: 1
+
+Enter Party Name : Vedanti Pawar
+
+Party Added to the wait list
+
+===== RESTAURANT WAITLIST SYSTEM =====
+1. Add Party to Waitlist
+2. Seat Party
+3. Display Waitlist
+4. Exit
+Enter your choice: 3
+Soumya
+Darshan Gawade
+Vedanti Pawar
+
+
+===== RESTAURANT WAITLIST SYSTEM =====
+1. Add Party to Waitlist
+2. Seat Party
+3. Display Waitlist
+4. Exit
+Enter your choice: 2
+
+Soumya is being seated.
+===== RESTAURANT WAITLIST SYSTEM =====
+1. Add Party to Waitlist
+2. Seat Party
+3. Display Waitlist
+4. Exit
+Enter your choice: 3
+Darshan Gawade
+Vedanti Pawar
+
+
+===== RESTAURANT WAITLIST SYSTEM =====
+1. Add Party to Waitlist
+2. Seat Party
+3. Display Waitlist
+4. Exit
+Enter your choice: 4
+👋 Exiting... Thank you!
+
+
+=== Code Execution Successful ===

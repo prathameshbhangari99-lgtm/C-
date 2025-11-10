@@ -1,0 +1,131 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+struct Node{
+    int coef;
+    int expo;
+    Node *next;
+};
+void insert(Node*& head,int coef,int expo)
+{
+    Node *nn=new Node();
+    nn->coef=coef;
+    nn->expo=expo;
+    nn->next=NULL;
+    if(head==NULL)
+    {
+        head=nn;
+        return;
+    }
+    else{
+        Node *temp=head;
+        while(temp->next!=NULL)
+        {
+            temp=temp->next;   
+        }
+        temp->next=nn;
+    }
+}
+Node *addPoly(Node *poly1, Node *poly2)
+{
+    Node *res=NULL;
+    while(poly1!=NULL && poly2!=NULL)
+    {
+        if(poly1->expo == poly2->expo)
+        {
+            insert(res,poly1->coef+poly2->coef,poly1->expo);
+            poly1=poly1->next;
+            poly2=poly2->next;
+        }
+        else if(poly1->expo>poly2->expo)
+        {
+            insert(res,poly1->coef,poly1->expo);
+            poly1=poly1->next;
+        }
+        else{
+            insert(res,poly2->coef,poly2->expo);
+            poly2=poly2->next;
+        }
+    }
+    while(poly1!=NULL)
+    {
+        insert(res,poly1->coef,poly1->expo);
+        poly1=poly1->next;
+    }
+    while(poly2!=NULL)
+    {
+        insert(res,poly2->coef,poly2->expo);
+        poly2=poly2->next;
+    }
+    return res;
+}
+void display(Node *poly)
+{
+    if(poly==NULL)
+    {
+        cout<<"\nNULL";
+        return;
+    }
+    while(poly!=NULL)
+    {
+        cout<<poly->coef<<"x^"<<poly->expo;
+        poly=poly->next;
+        if(poly!=NULL){      //poly->next madhe value ahe mg                     tejha adhi +
+            cout<<" + ";
+        }
+    }
+    
+}
+int main() {
+    // Write C++ code here
+    Node *poly1=NULL;
+    Node *poly2=NULL;
+    Node *res=NULL;
+    int n1,n2,coef,expo;
+    
+    cout<<"\nEnter no. of terms in Polynomial 1 : ";
+    cin>>n1;
+    
+    for(int i=0;i<n1;i++)
+    {
+        cout<<"Enter Coefficient and Exponent : ";
+        cin>>coef>>expo;
+        insert(poly1,coef,expo);
+    }
+    cout<<"\nEnter no. of terms in Polynomial 2 : ";
+    cin>>n2;
+    for(int i=0;i<n2;i++)
+    {
+        cout<<"Enter Coefficient and Exponent : ";
+        cin>>coef>>expo;
+        insert(poly2,coef,expo);
+    }
+    
+    cout<<"\nPolynomial 1 : ";
+    display(poly1);
+    cout<<"\nPolynomial 2 : ";
+    display(poly2);
+    
+    res=addPoly(poly1,poly2);
+    cout<<"\nResultant Polynomial After Addition : ";
+    display(res);
+    return 0;
+}
+
+#OUTPUT:
+
+Enter no. of terms in Polynomial 1 : 3
+Enter Coefficient and Exponent : 4 2
+Enter Coefficient and Exponent : 2 1
+Enter Coefficient and Exponent : 5 0
+
+Enter no. of terms in Polynomial 2 : 3
+Enter Coefficient and Exponent : 5 2
+Enter Coefficient and Exponent : 3 1
+Enter Coefficient and Exponent : 2 0
+
+Polynomial 1 : 4x^2 + 2x^1 + 5x^0
+Polynomial 2 : 5x^2 + 3x^1 + 2x^0
+Resultant Polynomial After Addition : 9x^2 + 5x^1 + 7x^0
+
+=== Code Execution Successful ===

@@ -1,0 +1,258 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+
+struct Student
+{
+    int rn;
+    string name;
+    int cgpa;
+};
+void display(Student s[],int lmt)
+{
+    for(int i=0;i<lmt;i++)
+    {
+        cout<<"\nRoll No : "<<s[i].rn;
+        cout<<"\nName : "<<s[i].name;
+        cout<<"\nCGPA : "<<s[i].cgpa;
+        cout<<endl;
+    }
+}
+void insertionSort(Student s[],int lmt)
+{
+    for(int i=1;i<lmt;i++)
+    {
+        int j=i-1;
+        Student temp=s[i];
+        while(j>=0 && s[j].rn>temp.rn)
+        {
+            s[j+1]=s[j];
+            j--;
+        }
+        s[j+1]=temp;
+    }
+    cout<<"\n\nStudent Record Sorted by Roll No : \n";
+    display(s,lmt);
+}
+void shellSort(Student s[],int lmt)
+{
+    Student temp;
+    int gap;
+    for(int gap=lmt/2;gap>=1;gap=gap/2)
+    {
+        for(int j=gap;j<lmt;j++)
+        {
+            for(int i=j-gap;i>=0;i=i-gap)
+            {
+                if(s[i].name > s[i+gap].name)
+                {
+                    temp=s[i];
+                    s[i]=s[i+gap];
+                    s[i+gap]=temp;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    }
+    cout<<"\nStudent Record Sorted by Name : \n";
+    display(s,lmt);
+}
+int getMaxVal(Student s[],int lmt)
+{
+    int mx=s[0].cgpa;
+    for(int i=0;i<lmt;i++)
+    {
+        if(s[i].cgpa > mx)
+        {
+            mx=s[i].cgpa;
+        }
+    }
+    return mx;
+}
+void countSort(Student s[],int lmt,int pos)
+{
+    int range=10;
+    int count[range]={0};
+    Student b[15];
+    for(int i=0;i<lmt;i++)
+    {
+        ++count[(s[i].cgpa/pos)%10];
+    }
+    for(int i=1;i<range;i++)
+    {
+        count[i]=count[i]+count[i-1];
+    }
+    for(int i=lmt-1;i>=0;i--)
+    {
+        b[--count[(s[i].cgpa/pos)%10]]=s[i];
+    }
+    for(int i=0;i<lmt;i++)
+    {
+        s[i]=b[i];
+    }
+    
+}
+
+void radixSort(Student s[],int lmt)
+{
+    int maxVal = getMaxVal(s,lmt);
+    for(int pos=1;maxVal/pos>0;pos=pos*10)
+    {
+        countSort(s,lmt,pos);
+    }
+    cout<<"\nStudent record sorted by CGPA : \n";
+    display(s,lmt);
+}
+int main() {
+   int n=15;
+   int lmt;
+   int ch;
+   Student s[n];
+   cout<<"\nEnter Total No. of Students : ";
+        cin>>lmt;
+   do{
+        cout<<"\nMENU :";
+        cout<<"\n1.Input Student Details";
+        cout<<"\n2.Sort student record according to Roll NO(Insertion Sort)";
+        cout<<"\n3.Sort student record according to Name(Shell Sort)";
+        cout<<"\n4.Sort student record according to CGPA(Radix Sort)";
+        cout<<"\n5.Display Records";
+        cout<<"\n6.Exit";
+        
+        cout<<"\nEnter Your Choice : ";
+        cin>>ch;
+        switch(ch)
+        {
+            case 1:
+                for(int i=0;i<lmt;i++)
+               {
+                   cout<<"Enter Roll No, Name and CGPA for Student "<<i<<" : ";
+                   cin>>s[i].rn>>s[i].name>>s[i].cgpa;
+               }
+               break;
+            case 2:
+                insertionSort(s,lmt);
+                break;
+            case 3:
+                shellSort(s,lmt);
+                break;
+                
+            case 4:
+                radixSort(s,lmt);
+                break;
+            case 5:
+                display(s,lmt);
+                break;
+            case 6:
+                cout<<"\nExiting....";
+                exit(0);
+            default:
+                cout<<"\nINVALID";
+        }
+       
+    }while(ch!=6);
+    return 0;
+}
+
+
+#OUTPUT :
+
+Enter Total No. of Students : 3
+
+MENU :
+1.Input Student Details
+2.Sort student record according to Roll NO(Insertion Sort)
+3.Sort student record according to Name(Shell Sort)
+4.Sort student record according to CGPA(Radix Sort)
+5.Display Records
+6.Exit
+Enter Your Choice : 1
+Enter Roll No, Name and CGPA for Student 0 : 5 ziya 8
+Enter Roll No, Name and CGPA for Student 1 : 1 dehs 7
+Enter Roll No, Name and CGPA for Student 2 : 9 abc 9
+
+MENU :
+1.Input Student Details
+2.Sort student record according to Roll NO(Insertion Sort)
+3.Sort student record according to Name(Shell Sort)
+4.Sort student record according to CGPA(Radix Sort)
+5.Display Records
+6.Exit
+Enter Your Choice : 4
+
+Student record sorted by CGPA : 
+
+Roll No : 1
+Name : dehs
+CGPA : 7
+
+Roll No : 5
+Name : ziya
+CGPA : 8
+
+Roll No : 9
+Name : abc
+CGPA : 9
+
+MENU :
+1.Input Student Details
+2.Sort student record according to Roll NO(Insertion Sort)
+3.Sort student record according to Name(Shell Sort)
+4.Sort student record according to CGPA(Radix Sort)
+5.Display Records
+6.Exit
+Enter Your Choice : 2
+
+
+Student Record Sorted by Roll No : 
+
+Roll No : 1
+Name : dehs
+CGPA : 7
+
+Roll No : 5
+Name : ziya
+CGPA : 8
+
+Roll No : 9
+Name : abc
+CGPA : 9
+
+MENU :
+1.Input Student Details
+2.Sort student record according to Roll NO(Insertion Sort)
+3.Sort student record according to Name(Shell Sort)
+4.Sort student record according to CGPA(Radix Sort)
+5.Display Records
+6.Exit
+Enter Your Choice : 3
+
+Student Record Sorted by Name : 
+
+Roll No : 9
+Name : abc
+CGPA : 9
+
+Roll No : 1
+Name : dehs
+CGPA : 7
+
+Roll No : 5
+Name : ziya
+CGPA : 8
+
+MENU :
+1.Input Student Details
+2.Sort student record according to Roll NO(Insertion Sort)
+3.Sort student record according to Name(Shell Sort)
+4.Sort student record according to CGPA(Radix Sort)
+5.Display Records
+6.Exit
+Enter Your Choice : 6
+
+Exiting....
+
+=== Code Execution Successful ===

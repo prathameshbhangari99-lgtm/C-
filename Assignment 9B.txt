@@ -1,0 +1,203 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+struct Node
+{
+    string name;
+    Node *next;
+};
+Node *rear=NULL;
+Node *front=NULL;
+void addCustomer(){
+    Node *nn =new Node();
+    string name;
+    cout<<"\nEnter Name : ";
+    cin>>nn->name;
+    nn->next=NULL;
+    if(front==NULL)
+    {
+           front=rear=nn;
+           rear->next=front;
+    }
+    else
+    {
+        rear->next=nn;
+        rear=nn;
+        nn->next=front;
+    }
+    cout<<"\nCustomer Added to the Queue\n";
+}
+void checkoutCustomer()
+{
+    if(front==NULL)
+    {
+        cout<<"\nNo Customer to Checkout\n";
+        return;
+    }
+    if(front==rear)
+    {
+        cout<<"\nCustomer "<<front->name<<" has checked out.\n";
+        delete front;
+        front=rear=NULL;
+    }
+    else{
+        Node *temp=front;
+        cout<<"\nCustomer "<<front->name<<" has checked out.\n";
+        front=front->next;
+        rear->next=front;
+        delete temp;
+    }
+}
+void viewCustomers()
+{
+    if(front == NULL)
+    {
+        cout<<"\nNo Customers \n";
+        return;
+    }
+    else{
+        Node *temp=front;
+        cout<<"\nCustomers in Queue : \n";
+        do{
+            cout<<temp->name<<" ";
+            temp=temp->next;
+        }while(temp!=front);
+    }
+}
+void closeCounter()
+{
+    if(front==NULL)
+    {
+        cout<<"\nNo cutomers in Queue\n";
+        return;
+    }
+    else
+    {
+        Node *temp=front;
+        do{
+            Node *del=temp;
+            temp=temp->next;
+            delete del;
+        }while(temp!=front);
+    }
+    front=rear=NULL;
+    cout<<"\nCheckout counter closed. And the Queue is cleared";
+}
+int main() {
+    int choice;
+    do {
+        cout << "\n===== SUPERMARKET CHECKOUT SYSTEM (Linked List) =====";
+        cout << "\n1. Customer Arrival";
+        cout << "\n2. Customer Checkout";
+        cout << "\n3. View Customers";
+        cout << "\n4. Close Checkout Counter";
+        cout << "\n5. Exit";
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: addCustomer(); break;
+            case 2: checkoutCustomer(); break;
+            case 3: viewCustomers(); break;
+            case 4: closeCounter(); break;
+            case 5: cout << "\nExiting system...\n"; break;
+            default: cout << "\nInvalid choice! Try again.\n";
+        }
+    } while (choice != 5);
+    return 0;
+}
+
+#OUTPUT : 
+
+===== SUPERMARKET CHECKOUT SYSTEM (Linked List) =====
+1. Customer Arrival
+2. Customer Checkout
+3. View Customers
+4. Close Checkout Counter
+5. Exit
+Enter your choice: 1
+
+Enter Name : Soumya
+
+Customer Added to the Queue
+
+===== SUPERMARKET CHECKOUT SYSTEM (Linked List) =====
+1. Customer Arrival
+2. Customer Checkout
+3. View Customers
+4. Close Checkout Counter
+5. Exit
+Enter your choice: 1
+
+Enter Name : Darshan
+
+Customer Added to the Queue
+
+===== SUPERMARKET CHECKOUT SYSTEM (Linked List) =====
+1. Customer Arrival
+2. Customer Checkout
+3. View Customers
+4. Close Checkout Counter
+5. Exit
+Enter your choice: 1
+
+Enter Name : Vedanti
+
+Customer Added to the Queue
+
+===== SUPERMARKET CHECKOUT SYSTEM (Linked List) =====
+1. Customer Arrival
+2. Customer Checkout
+3. View Customers
+4. Close Checkout Counter
+5. Exit
+Enter your choice: 3
+
+Customers in Queue : 
+Soumya Darshan Vedanti 
+===== SUPERMARKET CHECKOUT SYSTEM (Linked List) =====
+1. Customer Arrival
+2. Customer Checkout
+3. View Customers
+4. Close Checkout Counter
+5. Exit
+Enter your choice: 2
+
+Customer Soumya has checked out.
+
+===== SUPERMARKET CHECKOUT SYSTEM (Linked List) =====
+1. Customer Arrival
+2. Customer Checkout
+3. View Customers
+4. Close Checkout Counter
+5. Exit
+Enter your choice: 3
+
+Customers in Queue : 
+Darshan Vedanti 
+===== SUPERMARKET CHECKOUT SYSTEM (Linked List) =====
+1. Customer Arrival
+2. Customer Checkout
+3. View Customers
+4. Close Checkout Counter
+5. Exit
+Enter your choice: 4
+
+Checkout counter closed. And the Queue is cleared
+===== SUPERMARKET CHECKOUT SYSTEM (Linked List) =====
+1. Customer Arrival
+2. Customer Checkout
+3. View Customers
+4. Close Checkout Counter
+5. Exit
+Enter your choice: 3
+
+No Customers 
+
+===== SUPERMARKET CHECKOUT SYSTEM (Linked List) =====
+1. Customer Arrival
+2. Customer Checkout
+3. View Customers
+4. Close Checkout Counter
+5. Exit
+Enter your choice: 

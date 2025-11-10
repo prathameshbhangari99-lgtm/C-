@@ -1,0 +1,186 @@
+#include <iostream> 
+#include <cstring> 
+using namespace std; 
+#define MAX 100 
+struct Stack { 
+char arr[MAX]; 
+int top; 
+}; 
+void init(Stack &s) { 
+s.top = -1; 
+} 
+void push(Stack &s, char x) { 
+if (s.top < MAX - 1) { 
+s.arr[++s.top] = x; 
+} 
+} 
+char pop(Stack &s) { 
+if (s.top >= 0) { 
+return s.arr[s.top--]; 
+} 
+return '#'; 
+} 
+char peek(Stack &s) { 
+if (s.top >= 0) return s.arr[s.top]; 
+return '#'; 
+} 
+bool isEmpty(Stack &s) { 
+return s.top == -1; 
+} 
+int precedence(char op) { 
+if (op == '+' || op == '-') return 1; 
+if (op == '*' || op == '/') return 2; 
+if (op == '^') return 3; 
+return 0; 
+} 
+bool isOperator(char c) { 
+return (c=='+'||c=='-'||c=='*'||c=='/'||c=='^'); 
+} 
+void infixToPostfix(char infix[], char postfix[]) { 
+Stack st; init(st); 
+int k = 0; 
+for (int i = 0; infix[i] != '\0'; i++) { 
+char c = infix[i]; 
+if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z')) { 
+postfix[k++] = c; 
+} else if (c == '(') { 
+push(st, c); 
+} else if (c == ')') { 
+while (!isEmpty(st) && peek(st) != '(') { 
+postfix[k++] = pop(st); 
+} 
+pop(st); 
+} else if (isOperator(c)) { 
+while (!isEmpty(st) && precedence(peek(st)) >= precedence(c)) { 
+postfix[k++] = pop(st); 
+} 
+push(st, c); 
+} 
+} 
+while (!isEmpty(st)) { 
+postfix[k++] = pop(st); 
+} 
+postfix[k] = '\0'; 
+} 
+void reverse(char exp[]) { 
+int len = strlen(exp); 
+for (int i = 0; i < len/2; i++) { 
+char t = exp[i]; 
+exp[i] = exp[len-i-1]; 
+exp[len-i-1] = t; 
+} 
+} 
+void infixToPrefix(char infix[], char prefix[]) { 
+char rev[MAX], temp[MAX]; 
+strcpy(rev, infix); 
+reverse(rev); 
+for (int i = 0; rev[i] != '\0'; i++) { 
+if (rev[i] == '(') rev[i] = ')'; 
+else if (rev[i] == ')') rev[i] = '('; 
+} 
+infixToPostfix(rev, temp); 
+strcpy(prefix, temp); 
+reverse(prefix); 
+} 
+struct IntStack { 
+int arr[MAX]; 
+int top; 
+}; 
+void initInt(IntStack &s) { s.top = -1; } 
+void pushInt(IntStack &s, int x) { s.arr[++s.top] = x; } 
+int popInt(IntStack &s) { return s.arr[s.top--]; } 
+int power(int a, int b) { 
+int res = 1; 
+for(int i=0;i<b;i++) res *= a; 
+return res; 
+} 
+int evalPostfix(char exp[]) { 
+IntStack st; initInt(st); 
+for (int i = 0; exp[i] != '\0'; i++) { 
+char c = exp[i]; 
+if (c >= '0' && c <= '9') { 
+pushInt(st, c - '0'); 
+} else { 
+int b = popInt(st); 
+            int a = popInt(st); 
+            switch(c) { 
+                case '+': pushInt(st, a+b); break; 
+                case '-': pushInt(st, a-b); break; 
+                case '*': pushInt(st, a*b); break; 
+                case '/': pushInt(st, a/b); break; 
+                case '^': pushInt(st, power(a,b)); break;  
+            } 
+        } 
+    } 
+    return popInt(st); 
+} 
+ 
+int evalPrefix(char exp[]) { 
+    IntStack st; initInt(st); 
+    int len = strlen(exp); 
+ 
+    for (int i = len-1; i >= 0; i--) { 
+        char c = exp[i]; 
+ 
+        if (c >= '0' && c <= '9') { 
+            pushInt(st, c - '0'); 
+        } else { 
+            int a = popInt(st); 
+            int b = popInt(st); 
+            switch(c) { 
+                case '+': pushInt(st, a+b); break; 
+                case '-': pushInt(st, a-b); break; 
+                case '*': pushInt(st, a*b); break; 
+                case '/': pushInt(st, a/b); break; 
+                case '^': pushInt(st, power(a,b)); break;  
+            } 
+        } 
+    } 
+    return popInt(st); 
+} 
+ 
+int main() { 
+    int choice; 
+    char expr[MAX], result[MAX]; 
+ 
+    do { 
+        cout << "\n--- Expression Converter & Evaluator ---\n"; 
+        cout << "1. Infix to Postfix\n"; 
+        cout << "2. Infix to Prefix\n"; 
+        cout << "3. Evaluate Postfix\n"; 
+        cout << "4. Evaluate Prefix\n"; 
+        cout << "5. Exit\n"; 
+        cout << "Enter your choice: "; 
+        cin >> choice; 
+ 
+        switch(choice) { 
+            case 1: 
+                cout << "Enter Infix: "; 
+                cin >> expr; 
+                infixToPostfix(expr, result); 
+                cout << "Postfix: " << result << endl; 
+                break; 
+            case 2: 
+                cout << "Enter Infix: "; 
+                cin >> expr; 
+                infixToPrefix(expr, result); 
+                cout << "Prefix: " << result << endl; 
+                break; 
+            case 3: 
+                cout << "Enter Postfix: "; 
+                cin >> expr; 
+                cout << "Value = " << evalPostfix(expr) << endl; 
+                break; 
+            case 4: 
+cout << "Enter Prefix: "; 
+cin >> expr; 
+cout << "Value = " << evalPrefix(expr) << endl; 
+break; 
+case 5: 
+cout << "Exiting...\n"; break; 
+default: 
+cout << "Invalid choice!\n"; 
+} 
+} while (choice != 5); 
+return 0; 
+} 

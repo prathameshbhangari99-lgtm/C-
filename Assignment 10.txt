@@ -1,0 +1,314 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+struct Job
+{
+    int job_ID;
+    int job_pr;
+    Job *next;
+    Job *prev;
+};
+Job *front=NULL;
+Job *rear=NULL;
+void addJobFront()
+{
+    int id,pr;
+    Job *nn=new Job();
+    cout<<"\nEnter Job ID : ";
+    cin>>id;
+    cout<<"\nEnter Job Priority : ";
+    cin>>pr;
+    
+    nn->job_ID=id;
+    nn->job_pr=pr;
+    nn->next=front;
+    nn->prev=NULL;
+    
+    if(front==NULL)
+    {
+        front=rear=nn;
+    }
+    else{
+        front->prev=nn;
+        front=nn;
+    }
+    cout<<"\nJob "<<nn->job_ID<<" added to the FRONT\n";
+}
+void addJobRear()
+{
+    int id,pr;
+    Job *nn=new Job();
+    cout<<"\nEnter Job ID : ";
+    cin>>id;
+    cout<<"\nEnter Job Priority : ";
+    cin>>pr;
+    
+    nn->job_ID=id;
+    nn->job_pr=pr;
+    nn->next=NULL;
+    nn->prev=rear;
+    
+    if(rear==NULL)
+    {
+        front=rear=nn;
+    }
+    else{
+        rear->next=nn;
+        rear=nn;
+    }
+    cout<<"\nJob "<<nn->job_ID<<" added successfully to the REAR.\n";
+}
+void removeJobFront()
+{
+    if(front==NULL)
+    {
+        cout<<"\nNo Jobs To Remove \n";
+        return;
+    }
+    Job *temp=front;
+    cout<<"Job "<<front->job_ID<<" removed from Front.\n";
+    front=front->next;
+    if(front==NULL)
+    {
+        rear=NULL;
+    }
+    else{
+        front->prev=NULL;
+    }
+    delete temp;
+}
+void removeJobRear()
+{
+    if(rear==NULL)
+    {
+        cout<<"\nNo Jobs to Remove \n";
+        return;
+    }
+    Job *temp=rear;
+    cout<<"\nJob "<<rear->job_ID<<" removed from rear.\n";
+    rear=rear->prev;
+    if(rear==NULL)
+    {
+        front=NULL;
+    }
+    else{
+        rear->next=NULL;
+    }
+    delete temp;
+}
+void displayJobs()
+{
+    Job *temp=front;
+    cout<<"Scheduled Jobs : ";
+    while(temp!=NULL)
+    {
+        cout<<"\n[ID : "<<temp->job_ID<<", Priority : "<<temp->job_pr<<"]";
+        temp=temp->next;
+    }
+}
+void searchJob()
+{
+    Job *temp=front;
+    if(front==NULL)
+    {
+        cout<<"\nNo Jobs Found.\n";
+        return;
+    }
+    int id;
+    cout<<"\nEnter Job ID to search : ";
+    cin>>id;
+    while(temp!=NULL)
+    {
+        if(temp->job_ID==id)
+        {
+            cout<<"\nJob Found!!! ID:"<<temp->job_ID<<" Priority:"<<temp->job_pr;
+            return;
+        }
+        temp=temp->next;
+    }
+    cout<<"\nJob Not Found.\n";
+    
+}
+int main() {
+    int choice;
+    while (true) {
+        cout << "\n========== JOB SCHEDULING SYSTEM ==========\n";
+        cout << "1. Add Job (Front)\n";
+        cout << "2. Add Job (Rear)\n";
+        cout << "3. Remove Job (Front)\n";
+        cout << "4. Remove Job (Rear)\n";
+        cout << "5. Display All Jobs\n";
+        cout << "6. Search Job\n";
+        cout << "7. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            addJobFront();
+            break;
+        case 2:
+            addJobRear();
+            break;
+        case 3:
+            removeJobFront();
+            break;
+        case 4:
+            removeJobRear();
+            break;
+        case 5:
+            displayJobs();
+            break;
+        case 6:
+            searchJob();
+            break;
+        case 7:
+            cout << "\n👋 Exiting Job Scheduling System...\n";
+            return 0;
+        default:
+            cout << "\n❌ Invalid Choice! Try Again.\n";
+        }
+    }
+    return 0;
+}
+
+#OUTPUT :
+
+========== JOB SCHEDULING SYSTEM ==========
+1. Add Job (Front)
+2. Add Job (Rear)
+3. Remove Job (Front)
+4. Remove Job (Rear)
+5. Display All Jobs
+6. Search Job
+7. Exit
+Enter your choice: 1
+
+Enter Job ID : 101
+
+Enter Job Priority : 5
+
+Job 101 added to the FRONT
+
+========== JOB SCHEDULING SYSTEM ==========
+1. Add Job (Front)
+2. Add Job (Rear)
+3. Remove Job (Front)
+4. Remove Job (Rear)
+5. Display All Jobs
+6. Search Job
+7. Exit
+Enter your choice: 2
+
+Enter Job ID : 105
+
+Enter Job Priority : 1
+
+Job 105 added successfully to the REAR.
+
+========== JOB SCHEDULING SYSTEM ==========
+1. Add Job (Front)
+2. Add Job (Rear)
+3. Remove Job (Front)
+4. Remove Job (Rear)
+5. Display All Jobs
+6. Search Job
+7. Exit
+Enter your choice: 1
+
+Enter Job ID : 111
+
+Enter Job Priority : 9
+
+Job 111 added to the FRONT
+
+========== JOB SCHEDULING SYSTEM ==========
+1. Add Job (Front)
+2. Add Job (Rear)
+3. Remove Job (Front)
+4. Remove Job (Rear)
+5. Display All Jobs
+6. Search Job
+7. Exit
+Enter your choice: 5
+Scheduled Jobs : 
+[ID : 111, Priority : 9]
+[ID : 101, Priority : 5]
+[ID : 105, Priority : 1]
+========== JOB SCHEDULING SYSTEM ==========
+1. Add Job (Front)
+2. Add Job (Rear)
+3. Remove Job (Front)
+4. Remove Job (Rear)
+5. Display All Jobs
+6. Search Job
+7. Exit
+Enter your choice: 3
+Job 111 removed from Front.
+
+========== JOB SCHEDULING SYSTEM ==========
+1. Add Job (Front)
+2. Add Job (Rear)
+3. Remove Job (Front)
+4. Remove Job (Rear)
+5. Display All Jobs
+6. Search Job
+7. Exit
+Enter your choice: 4
+
+Job 105 removed from rear.
+
+========== JOB SCHEDULING SYSTEM ==========
+1. Add Job (Front)
+2. Add Job (Rear)
+3. Remove Job (Front)
+4. Remove Job (Rear)
+5. Display All Jobs
+6. Search Job
+7. Exit
+Enter your choice: 5
+Scheduled Jobs : 
+[ID : 101, Priority : 5]
+========== JOB SCHEDULING SYSTEM ==========
+1. Add Job (Front)
+2. Add Job (Rear)
+3. Remove Job (Front)
+4. Remove Job (Rear)
+5. Display All Jobs
+6. Search Job
+7. Exit
+Enter your choice: 1
+
+Enter Job ID : 111
+
+Enter Job Priority : 9
+
+Job 111 added to the FRONT
+
+========== JOB SCHEDULING SYSTEM ==========
+1. Add Job (Front)
+2. Add Job (Rear)
+3. Remove Job (Front)
+4. Remove Job (Rear)
+5. Display All Jobs
+6. Search Job
+7. Exit
+Enter your choice: 6
+
+Enter Job ID to search : 101
+
+Job Found!!! ID:101 Priority:5
+========== JOB SCHEDULING SYSTEM ==========
+1. Add Job (Front)
+2. Add Job (Rear)
+3. Remove Job (Front)
+4. Remove Job (Rear)
+5. Display All Jobs
+6. Search Job
+7. Exit
+Enter your choice: 7
+
+👋 Exiting Job Scheduling System...
+
+
+=== Code Execution Successful ===
